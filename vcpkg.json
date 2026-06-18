@@ -1,0 +1,8 @@
+{
+  "name": "lodev-raycaster-learning",
+  "version-string": "0.1.0",
+  "builtin-baseline": "e6ed7c5be05eaedc2d06ee3e51bd059409429c5e",
+  "dependencies": [
+    "sdl1"
+  ]
+}

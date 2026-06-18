@@ -1,0 +1,57 @@
+# Build folders
+
+build/
+out/
+cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# vcpkg generated dependencies
+
+vcpkg_installed/
+.vcpkg-root
+
+# Executables and binaries
+
+*.exe
+*.dll
+*.lib
+*.obj
+*.pdb
+*.ilk
+*.exp
+*.idb
+*.manifest
+
+# Visual Studio / MSVC
+
+.vs/
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+
+# VS Code local settings
+
+.vscode/*
+!.vscode/settings.json
+
+# Debug / logs
+
+*.log
+*.tmp
+*.bak
+
+# OS files
+
+.DS_Store
+Thumbs.db
+
+# QuickCG / SDL generated files if any
+
+*.o
+*.a
+*.so
+*.dylib
