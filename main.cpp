@@ -92,7 +92,20 @@ int main(int /*argc*/, char * /*argv*/[])
 
     while (!done())
     {
-        
+        // Create ray direction
+        for (int i = 0; i < w; i++) {
+            // Camera's X position based on plane
+            // Left = -1, Centre = 0, Right = 1
+            double cameraX = 2 * i / double(w) - 1; 
+
+            // apply camera's position to the plane, then add player's direction to the vector
+            double rayDirX = dirX + planeX * cameraX;
+            double rayDirY = dirY + planeY * cameraX;
+
+            // We multiply the cameraX to the plane because it currently is not the same direction
+            // as the what the player is facing, once done, we then add the direction of the player
+        };
+
     }
 
 }
