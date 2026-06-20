@@ -102,9 +102,9 @@ int main(int /*argc*/, char * /*argv*/[])
             double rayDirX = dirX + planeX * cameraX;
             double rayDirY = dirY + planeY * cameraX;
 
-            // We multiply the cameraX to the plane because it currently is not the same direction
+            // We multiply the cameraX to the plane because the plane is not facing the same direction
             // as the what the player is facing, once done, we then add the direction of the player
-        };
+        }
 
     }
 
