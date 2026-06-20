@@ -84,4 +84,15 @@ int main(int /*argc*/, char * /*argv*/[])
     double time = 0.0;
     double oldTime = 0.0;
 
+    const int screenWidth = 1280;
+    const int screenHeight = 1024;
+    
+    // Resolution, 0 = no fullscreen, 1 = fullscreen, title of application
+    screen(screenWidth, screenHeight, 0, "Raycaster");
+
+    while (!done())
+    {
+        
+    }
+
 }
