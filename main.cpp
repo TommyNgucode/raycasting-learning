@@ -64,23 +64,24 @@ int map[mapWidth][mapHeight] =
         {1, 4, 4, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
         {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
 
-int main(int /*argc*/, char */*argv*/[])
+int main(int /*argc*/, char * /*argv*/[])
 {
-  double posX = 22, posY = 12; // player position (x,y)
-  double dirX = -1, dirY = 0;  // direction of player (x,y)
+    double posX = 22, posY = 12; // player position (x,y)
+    double dirX = -1, dirY = 0;  // direction of player (x,y)
 
-  // camera plane of the player
-  // controls how wide a player can see
-  // determines fov, in this case it is 66°
-  double planeX = 0, planeY = 0.66;
+    // camera plane of the player
+    // controls how wide a player can see
+    // determines fov, in this case it is 66°
+    double planeX = 0, planeY = 0.66;
 
-  // FOV influenced by directional vector
-  // if directional vector is smaller = narrower FOV
-  // if directional vector is higher = wider FOV
-  // tan(angle) = ratio (opp/adj)
-  // atan(ratio (opp/adj)) = angle
-  // Multiply this FOV results by 2 since there are two separate rays to account for, or 2 right angled triangles.
-  // int FOV = 2 * std::atan((dirX / dirY) / (planeX/ planeY));
-  double time = 0.0;
-  double oldTime = 0.0;
+    // FOV influenced by directional vector
+    // if directional vector is smaller = narrower FOV
+    // if directional vector is higher = wider FOV
+    // tan(angle) = ratio (opp/adj)
+    // atan(ratio (opp/adj)) = angle
+    // Multiply this FOV results by 2 since there are two separate rays to account for, or 2 right angled triangles.
+    // int FOV = 2 * std::atan((dirX / dirY) / (planeX/ planeY));
+    double time = 0.0;
+    double oldTime = 0.0;
+
 }
