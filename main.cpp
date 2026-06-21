@@ -102,10 +102,61 @@ int main(int /*argc*/, char * /*argv*/[])
             double rayDirX = dirX + planeX * cameraX;
             double rayDirY = dirY + planeY * cameraX;
 
-            // We multiply the cameraX to the plane because the plane is not facing the same direction
-            // as the what the player is facing, once done, we then add the direction of the player
+        // cameraX * plane chooses how far left, centre, or right this ray is on the screen.
+        // Adding direction makes the ray point forward in the player's facing direction.
+        // plane * cameraX chooses where on the screen/FOV the ray aims.
+        // dir makes that ray go forward in the player's facing direction.
         }
 
+        // Position of sqaure we are in
+        int mapX = int(posX);
+        int mapY = int(posY);
+
+        // Initial distance that passes a boundary e.g. horizontal or vertical
+        double sideDistX; // initial vertical boundary
+        double sideDistY; // initial horizontal boundary
+
+        // deltaDiskX and deltaDiskY tell us the repeated distance between grid boundaries along the ray (diagonal). 
+        // rayDirX and rayDirY tell us how strongly the ray moves in each direction. 
+        // If rayDirX or rayDirY is 0, the ray will not cross that type of boundary, so we store a huge number instead.
+        double deltaDiskX = (rayDirX == 0) ? 1e30 : std::abs(1 / rayDirX);
+        double deltaDiskY = (rayDirY == 0) ? 1e30 : std::abs(1/rayDirY);
+        double prepWallDist;
+
+        // Direction to step in x or y-direction (either +1 or -1)
+        int stepX;
+        int stepY;
+
+        
+        int hit = 0; // Was there a wall to hit?
+        int side; //was a NS or a EW wall hit?
+
+        // Calculate step and initial sideDist
+
+        // if ray direction x is left side
+        // sideDistX initialises at left vertical boundary
+        // else 
+        // sideDistX initialises at right vertical boundary
+        if (rayDirX < 0)
+        {
+            stepX = -1;
+            sideDistX = (posX - mapX) * deltaDiskX;
+        }
+        
+        else {
+            stepX = 1;
+            sideDistX = (mapX + 1.0 - posX) * deltaDiskX; 
+        }
+
+        if (rayDirY < 0)
+        {
+            stepY = -1;
+            sideDistY = (posY - mapY) * deltaDiskY;
+        }
+        else {
+            stepY = +1;
+            sideDistY = (mapY + 1.0 - posY) * deltaDiskY;
+        }
     }
 
 }
