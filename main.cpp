@@ -214,5 +214,21 @@ int main(int /*argc*/, char * /*argv*/[])
                 case 4: color = RGB_White; break;
                 default: color = RGB_Yellow; break;
             }
+
+            // if ray hits a horizontal border, make it darker
+            if (side == 1) {
+                color = color / 2;
+            }
+
+            verLine(x, drawStart, drawEnd, color);
+
+            oldTime = time;
+            time = getTicks();
+            double frameTime = (time - oldTime) / 1000.0;
+            print(1.0 / frameTime);
+            // shows finished frame on screen
+            redraw();
+            // clears screen for next frame
+            cls();
     }
 }
