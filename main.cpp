@@ -157,6 +157,31 @@ int main(int /*argc*/, char * /*argv*/[])
                 stepY = +1;
                 sideDistY = (mapY + 1.0 - posY) * deltaDistY;
             }
+
+            while (hit == 0) {
+                
+                // if next vertical border is closer
+                if (sideDistX < sideDistX) {
+                    sideDistX += deltaDistX;
+                    // StepX = 1: move right
+                    // StepX = -1: move left
+                    mapX += stepX;
+                    side = 0;
+                }
+                // if next horizontal border is closer
+                else {
+                    sideDistY += deltaDistY;
+                    // StepY = 1: move up
+                    // StepY = -1: move down
+                    mapY += stepY;
+                    side = 1;
+                }
+
+                // Check if ray has hit a wall
+                if (worldMap[mapX][mapY] > 0) hit = 1;
+            }
+            
+           
         }
     }
 }
