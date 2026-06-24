@@ -195,6 +195,24 @@ int main(int /*argc*/, char * /*argv*/[])
 
             // walls slice height (walls height depending on distance) 
             int lineHeight = (int)(h / prepWallDist);
-        }
+
+            // centers wall slice to the middle of the screen
+            int drawStart = -lineHeight / 2 + h / 2;
+            int drawEnd = lineHeight / 2 + h /2;
+
+            // if drawStart is above the screen, ensures wall begins at top of the screen
+            if (drawStart < 0) drawStart = 0;
+
+            // if drawEnd is below the screen, make sure it starts at the bottom
+            if (drawEnd > h) drawEnd = h; 
+
+            switch (worldMap[mapX][mapY])
+            {
+                case 1: color = RGB_Red; break;
+                case 2: color = RGB_Green; break;
+                case 3: color = RGB_Blue; break;
+                case 4: color = RGB_White; break;
+                default: color = RGB_Yellow; break;
+            }
     }
 }
