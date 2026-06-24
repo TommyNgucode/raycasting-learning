@@ -181,7 +181,20 @@ int main(int /*argc*/, char * /*argv*/[])
                 if (worldMap[mapX][mapY] > 0) hit = 1;
             }
             
-           
+            // distance from player's view to wall 
+            double prepWallDist;
+            
+            // subtract delta dist because within last iteration of DDA loop we added an extra delta dist
+            if (side == 0) {
+                prepWallDist = sideDistX - deltaDistX;
+            }
+            else {
+                prepWallDist = sideDistY - deltaDistY;
+            }
+
+
+            // walls slice height (walls height depending on distance) 
+            int lineHeight = (int)(h / prepWallDist);
         }
     }
 }
