@@ -251,7 +251,7 @@ int main(int /*argc*/, char * /*argv*/[])
 
         readKeys();
 
-        if (keyDown(SDL_KEYUP))
+         if (keyDown(SDLK_UP))
         {
             if (worldMap[int(posX + dirX * moveSpeed)][int(posY)] == false)
                 posX += dirX * moveSpeed;
@@ -259,14 +259,13 @@ int main(int /*argc*/, char * /*argv*/[])
                 posY += dirY * moveSpeed;
         }
 
-        if (keyDown(SDL_KEYDOWN))
+        if (keyDown(SDLK_DOWN))
         {
             if (worldMap[int(posX - dirX * moveSpeed)][int(posY)] == false)
                 posX -= dirX * moveSpeed;
             if (worldMap[int(posX)][int(posY - dirY * moveSpeed)] == false)
                 posY -= dirY * moveSpeed;
         }
-
         if (keyDown(SDLK_RIGHT))
         {
             double oldDirX = dirX;
