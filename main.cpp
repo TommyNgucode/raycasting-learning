@@ -251,7 +251,7 @@ int main(int /*argc*/, char * /*argv*/[])
 
         readKeys();
 
-         if (keyDown(SDLK_UP))
+        if (keyDown(SDLK_w))
         {
             if (worldMap[int(posX + dirX * moveSpeed)][int(posY)] == false)
                 posX += dirX * moveSpeed;
@@ -259,14 +259,14 @@ int main(int /*argc*/, char * /*argv*/[])
                 posY += dirY * moveSpeed;
         }
 
-        if (keyDown(SDLK_DOWN))
+        if (keyDown(SDLK_s))
         {
             if (worldMap[int(posX - dirX * moveSpeed)][int(posY)] == false)
                 posX -= dirX * moveSpeed;
             if (worldMap[int(posX)][int(posY - dirY * moveSpeed)] == false)
                 posY -= dirY * moveSpeed;
         }
-        if (keyDown(SDLK_RIGHT))
+        if (keyDown(SDLK_d))
         {
             double oldDirX = dirX;
             dirX = dirX * cos(-rotSpeed) - dirY * sin(-rotSpeed);
@@ -276,7 +276,7 @@ int main(int /*argc*/, char * /*argv*/[])
             planeY = oldPlaneX * sin(-rotSpeed) + planeY * cos(-rotSpeed);
         }
 
-        if (keyDown(SDLK_LEFT))
+        if (keyDown(SDLK_a))
         {
             double oldDirX = dirX;
             dirX = dirX * cos(rotSpeed) - dirY * sin(rotSpeed);
