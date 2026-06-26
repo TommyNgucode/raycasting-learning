@@ -154,7 +154,7 @@ int main(int /*argc*/, char * /*argv*/[])
             }
             else
             {
-                stepY = +1;
+                stepY = 1;
                 sideDistY = (mapY + 1.0 - posY) * deltaDistY;
             }
 
@@ -162,7 +162,7 @@ int main(int /*argc*/, char * /*argv*/[])
             {
 
                 // if next vertical border is closer
-                if (sideDistX < sideDistX)
+                if (sideDistX < sideDistY)
                 {
                     sideDistX += deltaDistX;
                     // StepX = 1: move right
@@ -200,15 +200,14 @@ int main(int /*argc*/, char * /*argv*/[])
 
             // centers wall slice to the middle of the screen
             int drawStart = -lineHeight / 2 + h / 2;
-            int drawEnd = lineHeight / 2 + h / 2;
-
             // if drawStart is above the screen, ensures wall begins at top of the screen
             if (drawStart < 0)
                 drawStart = 0;
 
+            int drawEnd = lineHeight / 2 + h / 2;
             // if drawEnd is below the screen, make sure it starts at the bottom
-            if (drawEnd > h)
-                drawEnd = h;
+            if (drawEnd >= h)
+                drawEnd = h - 1;
 
             ColorRGB color;
             switch (worldMap[mapX][mapY])
