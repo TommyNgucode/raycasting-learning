@@ -34,10 +34,10 @@ g++ *.cpp -lSDL -O3 -W -Wall -ansi -pedantic
 g++ *.cpp -lSDL
 */
 
-#define mapWidth 25;
-#define mapHeight 24;
+#define mapWidth 25
+#define mapHeight 24
 
-int map[mapWidth][mapHeight] =
+int worldMap[mapWidth][mapHeight] =
     {
         {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
         {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
@@ -93,11 +93,11 @@ int main(int /*argc*/, char * /*argv*/[])
     while (!done())
     {
         // Create ray direction
-        for (int i = 0; i < w; i++)
+        for (int x = 0; x < w; x++)
         {
             // Camera's X position based on plane
             // Left = -1, Centre = 0, Right = 1
-            double cameraX = 2 * i / double(w) - 1;
+            double cameraX = 2 * x / double(w) - 1;
 
             // apply camera's position to the plane, then add player's direction to the vector
             double rayDirX = dirX + planeX * cameraX;
@@ -158,10 +158,12 @@ int main(int /*argc*/, char * /*argv*/[])
                 sideDistY = (mapY + 1.0 - posY) * deltaDistY;
             }
 
-            while (hit == 0) {
-                
+            while (hit == 0)
+            {
+
                 // if next vertical border is closer
-                if (sideDistX < sideDistX) {
+                if (sideDistX < sideDistX)
+                {
                     sideDistX += deltaDistX;
                     // StepX = 1: move right
                     // StepX = -1: move left
@@ -169,7 +171,8 @@ int main(int /*argc*/, char * /*argv*/[])
                     side = 0;
                 }
                 // if next horizontal border is closer
-                else {
+                else
+                {
                     sideDistY += deltaDistY;
                     // StepY = 1: move up
                     // StepY = -1: move down
@@ -178,57 +181,113 @@ int main(int /*argc*/, char * /*argv*/[])
                 }
 
                 // Check if ray has hit a wall
-                if (worldMap[mapX][mapY] > 0) hit = 1;
+                if (worldMap[mapX][mapY] > 0)
+                    hit = 1;
             }
-            
-            // distance from player's view to wall 
-            double prepWallDist;
-            
+
             // subtract delta dist because within last iteration of DDA loop we added an extra delta dist
-            if (side == 0) {
+            if (side == 0)
+            {
                 prepWallDist = sideDistX - deltaDistX;
             }
-            else {
+            else
+            {
                 prepWallDist = sideDistY - deltaDistY;
             }
 
-
-            // walls slice height (walls height depending on distance) 
+            // walls slice height (walls height depending on distance)
             int lineHeight = (int)(h / prepWallDist);
 
             // centers wall slice to the middle of the screen
             int drawStart = -lineHeight / 2 + h / 2;
-            int drawEnd = lineHeight / 2 + h /2;
+            int drawEnd = lineHeight / 2 + h / 2;
 
             // if drawStart is above the screen, ensures wall begins at top of the screen
-            if (drawStart < 0) drawStart = 0;
+            if (drawStart < 0)
+                drawStart = 0;
 
             // if drawEnd is below the screen, make sure it starts at the bottom
-            if (drawEnd > h) drawEnd = h; 
+            if (drawEnd > h)
+                drawEnd = h;
 
+            ColorRGB color;
             switch (worldMap[mapX][mapY])
             {
-                case 1: color = RGB_Red; break;
-                case 2: color = RGB_Green; break;
-                case 3: color = RGB_Blue; break;
-                case 4: color = RGB_White; break;
-                default: color = RGB_Yellow; break;
+            case 1:
+                color = RGB_Red;
+                break;
+            case 2:
+                color = RGB_Green;
+                break;
+            case 3:
+                color = RGB_Blue;
+                break;
+            case 4:
+                color = RGB_White;
+                break;
+            default:
+                color = RGB_Yellow;
+                break;
             }
 
             // if ray hits a horizontal border, make it darker
-            if (side == 1) {
+            if (side == 1)
+            {
                 color = color / 2;
             }
 
             verLine(x, drawStart, drawEnd, color);
+        }
+        oldTime = time;
+        time = getTicks();
+        double frameTime = (time - oldTime) / 1000.0;
+        print(1.0 / frameTime);
+        // shows finished frame on screen
+        redraw();
+        // clears screen for next frame
+        cls();
 
-            oldTime = time;
-            time = getTicks();
-            double frameTime = (time - oldTime) / 1000.0;
-            print(1.0 / frameTime);
-            // shows finished frame on screen
-            redraw();
-            // clears screen for next frame
-            cls();
+        double moveSpeed = frameTime * 5.0;
+        double rotSpeed = frameTime * 3.0;
+
+        readKeys();
+
+        if (keyDown(SDL_KEYUP))
+        {
+            if (worldMap[int(posX + dirX * moveSpeed)][int(posY)] == false)
+                posX += dirX * moveSpeed;
+            if (worldMap[int(posX)][int(posY + dirY * moveSpeed)] == false)
+                posY += dirY * moveSpeed;
+        }
+
+        if (keyDown(SDL_KEYDOWN))
+        {
+            if (worldMap[int(posX - dirX * moveSpeed)][int(posY)] == false)
+                posX -= dirX * moveSpeed;
+            if (worldMap[int(posX)][int(posY - dirY * moveSpeed)] == false)
+                posY -= dirY * moveSpeed;
+        }
+
+        if (keyDown(SDLK_RIGHT))
+        {
+            double oldDirX = dirX;
+            dirX = dirX * cos(-rotSpeed) - dirY * sin(-rotSpeed);
+            dirY = oldDirX * sin(-rotSpeed) + dirY * cos(-rotSpeed);
+            double oldPlaneX = planeX;
+            planeX = planeX * cos(-rotSpeed) - planeY * sin(-rotSpeed);
+            planeY = oldPlaneX * sin(-rotSpeed) + planeY * cos(-rotSpeed);
+        }
+
+        if (keyDown(SDLK_LEFT))
+        {
+            double oldDirX = dirX;
+            dirX = dirX * cos(rotSpeed) - dirY * sin(rotSpeed);
+            dirY = oldDirX * sin(rotSpeed) + dirY * cos(rotSpeed);
+            double oldPlaneX = planeX;
+            planeX = planeX * cos(rotSpeed) - planeY * sin(rotSpeed);
+            planeY = oldPlaneX * sin(rotSpeed) + planeY * cos(rotSpeed);
+        }
     }
+
+    return 0;
 }
